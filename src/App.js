@@ -1,6 +1,7 @@
 import { Box, Heading } from "dracula-ui";
 import "dracula-ui/styles/dracula-ui.css";
-import CounterView from "./features/counter/CounterView";
+
+import PostsView from "./features/posts/PostsView";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <Box p="md">
         <Heading>React Redux toolkit</Heading>
       </Box>
-      <CounterView />
+      <PostsView />
     </Box>
   );
 }
