@@ -1,14 +1,20 @@
-import { Box } from "dracula-ui";
+import { Box, Heading } from "dracula-ui";
 import "dracula-ui/styles/dracula-ui.css";
 
-import Counter from "./components/counter";
 function App() {
   return (
     <Box
       className="drac-bg-purple-cyan"
-      style={{ display: "flex", justifyContent: "center" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "auto",
+      }}
     >
-      <Counter />
+      <Box p="md">
+        <Heading>React Redux toolkit</Heading>
+      </Box>
     </Box>
   );
 }
