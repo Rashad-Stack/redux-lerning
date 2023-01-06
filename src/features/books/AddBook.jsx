@@ -1,8 +1,9 @@
 import { Input } from "dracula-ui";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addBook } from "../../redux/slices/BooksSlice";
+import { v4 as uuid } from "uuid";
 
 function AddBook() {
   const [bookName, setBookName] = useState("");
@@ -10,15 +11,13 @@ function AddBook() {
   const [language, setLanguage] = useState("");
   const [category, setCategory] = useState("");
 
-  const numberOfBooks = useSelector((state) => state.booksReducer.books.length);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const book = {
-      id: (numberOfBooks + 1).toString(),
+      id: uuid(),
       title: bookName,
       author: author,
       categories: category,
@@ -123,11 +122,12 @@ function AddBook() {
                 />
               </div>
             </div>
+
             <button
               type="submit"
-              className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg hover:bg-gradient-to-br from-purple-600  hover:text-white dark:text-white border-from-purple-600 to-blue-500 active:scale-90 transition-all"
+              className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 active:scale-90 transition-all"
             >
-              <span className="relative px-5 py-2.5 transition-all ease-in duration-7 dark:bg-gray-700/50 rounded-md group-hover:bg-opacity-0 flex items-center">
+              <span className="flex items-center">
                 <svg
                   className="mr-1 -ml-1 w-6 h-6"
                   fill="currentColor"

@@ -1,9 +1,15 @@
 import { Heading } from "dracula-ui";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { deleteBook } from "../../redux/slices/BooksSlice";
 
 const BooksView = () => {
   const books = useSelector((state) => state.booksReducer.books);
+  const dispatch = useDispatch();
+  const handleDeleteBook = (id) => {
+    dispatch(deleteBook(id));
+  };
 
   return (
     <div className="h-screen">
@@ -35,38 +41,47 @@ const BooksView = () => {
           </thead>
           <tbody>
             {books &&
-              books.map((book) => (
-                <tr
-                  key={book.id}
-                  className="bg-white border-b dark:bg-gray-800/80 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <th
-                    scope="row"
-                    className="w-48 truncate px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              books.map((book) => {
+                const { id, title, author, categories, language } = book;
+                return (
+                  <tr
+                    key={id}
+                    className="bg-white border-b dark:bg-gray-800/80 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >
-                    {book?.title}
-                  </th>
-                  <td className="px-6 h-8">{book?.author}</td>
-                  <td className="px-6 h-8">{book?.categories}</td>
-                  <td className="px-6 h-8">{book?.language}</td>
-
-                  <td className="flex gap-3 justify-center">
-                    <button
-                      type="button"
-                      className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 active:scale-90 transition-all"
+                    <th
+                      scope="row"
+                      className="w-48 truncate px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      Edit
-                    </button>
+                      {title}
+                    </th>
+                    <td className="px-6 h-8 capitalize">{author}</td>
+                    <td className="px-6 h-8 capitalize">{categories}</td>
+                    <td className="px-6 h-8 capitalize">{language}</td>
 
-                    <button
-                      type="button"
-                      className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 active:scale-90 transition-all"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                    <td className="flex gap-3 justify-center">
+                      <Link
+                        to="/edit-book"
+                        state={{ id, title, author, categories, language }}
+                      >
+                        <button
+                          type="button"
+                          className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 active:scale-90 transition-all"
+                        >
+                          Edit
+                        </button>
+                      </Link>
+
+                      <button
+                        onClick={() => handleDeleteBook(id)}
+                        type="button"
+                        className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 active:scale-90 transition-all"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
